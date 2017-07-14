@@ -9,6 +9,5 @@ public class Mover : MonoBehaviour {
 	public float speed;
 	void Start() {
 		rb.velocity = transform.forward * speed;
-
 	}
 }

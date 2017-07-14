@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
-	public GameObject hazard;
+	public GameObject[] hazards;
 	public Vector3 spawnValue;
 	public int hazardCount;
 	public float spawnWait;
@@ -47,10 +47,11 @@ public class GameController : MonoBehaviour {
 		while (true) 
 		{
 			for (int i = 0; i < hazardCount; i++) {
+				GameObject hazard = hazards [Random.Range (0, hazards.Length)];
 				Vector3 spawnPosition = new Vector3 (Random.Range (-spawnValue.x, spawnValue.x), spawnValue.y, spawnValue.z);
 				Quaternion spawnRotation = Quaternion.identity;
-				Instantiate (hazard, spawnPosition, spawnRotation);	
-
+				GameObject clone = Instantiate (hazard, spawnPosition, spawnRotation);	
+				ReverseDirection (clone);
 				yield return new WaitForSeconds (spawnWait);
 			}
 			yield return new WaitForSeconds (waveWait);
@@ -60,6 +61,11 @@ public class GameController : MonoBehaviour {
 				break;
 			}
 		}
+	}
+
+	void ReverseDirection(GameObject clone) {
+		//clone.transform.rotation.y = 0;
+		//clone.GetComponent<Mover> ().speed = 5;
 	}
 
 	public void AddScore(int newScore) {
